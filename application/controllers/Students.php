@@ -9,14 +9,14 @@ class Students extends CI_Controller {
 	  $this->load->model('Student');
 	}
 
-    public function index()
-    {
+    	public function index()
+    	{
 		$data['books'] = $this->Student->get_all_books();
 		// $data['use'] = $this->Student->get_all_users_by_faculty();
 		$data['count'] = $this->Student->count_book_by_1();
 		$data['total_borrowed'] = $this->Student->count_borrow_books();
-        $this->load->view('students/books', $data);
-    }
+        	$this->load->view('students/books', $data);
+    	}
 
 	public function more_than_5()
 	{
