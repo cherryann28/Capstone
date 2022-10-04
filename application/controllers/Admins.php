@@ -14,10 +14,10 @@ class Admins extends CI_Controller {
 	}
 
 	public function index()
-    {
-        $data['books'] = $this->Admin->get_all_books();
+    	{
+        	$data['books'] = $this->Admin->get_all_books();
 		$this->load->view('admin/book_lists', $data);
-    }
+    	}
 
 	public function book_list()
 	{
