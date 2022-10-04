@@ -3,43 +3,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Model
 {
-    /*
+    	/*
 		* DOCU: This function is to get all books from the database books table
 		* Owned by Cherry Ann
-	*/
-    public function get_all_users_by_user_level()
-	{
+    	*/
+    	public function get_all_users_by_user_level()
+    	{
 		return $this->db->query("SELECT name, school_id, email, contact_number, user_level FROM users 
                                     WHERE user_level != 'admin' ")->result_array();
-	}
+    	}
 
-    /*
+    	/*
 		* DOCU: This function is to get all books from the database books table
 		* Owned by Cherry Ann
-	*/
-    public function get_all_books()
-	{
+    	*/
+    	public function get_all_books()
+    	{
 		return $this->db->query("SELECT * FROM books")->result_array();
-	}
+    	}
 
-    /*
+    	/*
 		* DOCU: This function is to insert a new book into database books table.
 		* Owned by Cherry Ann
-	*/
-    public function add_book($book)
-    {
-        $query = "INSERT INTO books (accesion, title, publisher, year, availability, created_at, updated_at)
-                    VALUES (?,?,?,?,?,?,?)";
-        $values = array($book['accesion'], $book['title'], $book['publisher'], $book['year'], $book['availability'],  
-                        date("Y-m-d, H:i:s"), date("Y-m-d, H:i:s"));
-        return $this->db->query($query, $values);
-    }
+    	*/
+    	public function add_book($book)
+   	{
+        	$query = "INSERT INTO books (accesion, title, publisher, year, availability, created_at, updated_at)
+                    	VALUES (?,?,?,?,?,?,?)";
+        	$values = array($book['accesion'], $book['title'], $book['publisher'], $book['year'], $book['availability'],  
+                        	date("Y-m-d, H:i:s"), date("Y-m-d, H:i:s"));
+        	return $this->db->query($query, $values);
+    	}
 	
 	/*
 		* DOCU: This function is to retrieves book filtered by id
 		* Owned by Cherry Ann
 	*/
-	public function get_book_by_id($id)
+    	public function get_book_by_id($id)
 	{
 		return $this->db->query("SELECT * FROM books WHERE id = ?", array($id))->row_array();
 	}
@@ -49,30 +49,30 @@ class Admin extends CI_Model
 		* Owned by Cherry Ann
 	*/
 	public function update_book($book)
-    {  
-        $query = "UPDATE books SET accesion = ?, title = ?, publisher = ?, year = ?, availability = ?, updated_at = NOW()
-                    WHERE id = ?";
-        $values = array($book['accesion'], $book['title'], $book['publisher'], $book['year'], $book['availability'], $book['id']);
-        return $this->db->query($query, $values);
+    	{  
+		$query = "UPDATE books SET accesion = ?, title = ?, publisher = ?, year = ?, availability = ?, updated_at = NOW()
+			    WHERE id = ?";
+		$values = array($book['accesion'], $book['title'], $book['publisher'], $book['year'], $book['availability'], $book['id']);
+		return $this->db->query($query, $values);
         
-    }	
+    	}	
 	/*
 		* DOCU: This function is to validate book.
 		* Owned by Cherry Ann
 	*/
 	public function validate_book()
-    {
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules("accesion", "Accesion", "required|numeric");
-        $this->form_validation->set_rules("title", "Title", "required");        
-        $this->form_validation->set_rules("publisher", "Publisher", "required");        
-        $this->form_validation->set_rules("year", "Year", "required|numeric"); 
-		$this->form_validation->set_rules("availability", "Availability", "required"); 
+    	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules("accesion", "Accesion", "required|numeric");
+		$this->form_validation->set_rules("title", "Title", "required");        
+		$this->form_validation->set_rules("publisher", "Publisher", "required");        
+		$this->form_validation->set_rules("year", "Year", "required|numeric"); 
+			$this->form_validation->set_rules("availability", "Availability", "required"); 
 
-        if(!$this->form_validation->run()){
-            return validation_errors();
-        }
-    }
+		if(!$this->form_validation->run()){
+		    return validation_errors();
+		}
+    	}
 
 	public function search_book($book)
 	{
@@ -86,22 +86,22 @@ class Admin extends CI_Model
 	}
 
 	public function add_message($message)
-    {
-        $query = "INSERT INTO messages (school_id, content, created_at, updated_at)
-                    VALUES (?,?, NOW(), NOW())";
-        $values = array($message['school_id'], $message['content']);
-        return $this->db->query($query, $values);
-    }
+    	{
+        	$query = "INSERT INTO messages (school_id, content, created_at, updated_at)
+                	    VALUES (?,?, NOW(), NOW())";
+		$values = array($message['school_id'], $message['content']);
+		return $this->db->query($query, $values);
+    	}
 
 	public function validate_message()
 	{
 		$this->load->library('form_validation');
-        $this->form_validation->set_rules("school_id", "Student ID", "required|numeric");
-        $this->form_validation->set_rules("content", "Message", "required");         
+		$this->form_validation->set_rules("school_id", "Student ID", "required|numeric");
+		$this->form_validation->set_rules("content", "Message", "required");         
 
-        if(!$this->form_validation->run()){
-            return validation_errors();
-        }
+		if(!$this->form_validation->run()){
+		    return validation_errors();
+        	}
 	}
 
 	public function get_all_records()
