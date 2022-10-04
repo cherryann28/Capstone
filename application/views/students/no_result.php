@@ -16,7 +16,7 @@
     <div id="books">
         <div class="search_book_container">
             <div class="search">
-                <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+                <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
                 <form class="form" action="<?= base_url()?>students/search" method="post">
                     <input type="text" placeholder="Search Book's title" name="search">
                 </form>
@@ -33,19 +33,6 @@
             <div class="view_all">
                 <a href="<?= base_url('students') ?>">View all books</a>
             </div>
-            <!-- <div class="data"> -->
-                <!-- <table>
-                    <thead>
-                        <tr>
-                            <th>Accesion</th>
-                            <th>Title</th>
-                            <th>Publisher</th>
-                            <th>Year</th>
-                            <th>Availability</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table>    -->
                 <div class="errors">
 <?php
         if($this->session->flashdata('errors'))
@@ -55,8 +42,7 @@
                 <h1><?= $value ?></h1>
 <?php       }
         } ?>
-                    </div> 
-            <!-- </div> -->
+                </div> 
         </div>
     </div>
 </body>

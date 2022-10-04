@@ -14,7 +14,7 @@
 <body>
     <div class="borrowed_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> |<a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <h3>Welcome, <?= $this->session->userdata('name');?> |<a href="<?= base_url('users/logout');?>"> Logout</a></h3>
             <form action="">
                 <input type="text" placeholder="Search Book's title">
             </form>
@@ -56,15 +56,10 @@
                             <td><?= $borrow['due_date'] ?></td>
                             <td>
 <?php
-
                             if($borrow['renewals_left']) {
  ?>
-                                <!-- echo "<a id=\"accept\" href=\"students/process_renew_book/".$borrow['book_id']."\">Renew</a>"
-                                 -->
-                                 <a id="accept" href="<?= base_url('students/process_renew_book')?>/<?= $borrow['book_id'] ?>">Return</a> 
-<?php                       
-                            } 
-?>
+                                 <a id="accept" href="<?= base_url('students/process_renew_book')?>/<?= $borrow['book_id'] ?>">Renew</a> 
+<?php                           }   ?> 
                             </td>
                             <td>
                                 <a id="" href="<?= base_url('students/process_return_book')?>/<?= $borrow['book_id'] ?>">Return</a>

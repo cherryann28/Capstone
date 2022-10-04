@@ -31,7 +31,7 @@
     <div id="books">
         <div class="search_book_container">
             <div class="search">
-                <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+                <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
                 <form class="form" action="<?= base_url()?>students/search" method="post">
                     <input type="text" placeholder="Search Book's title" name="search">
                 </form>
@@ -57,36 +57,37 @@
                             <th>Publisher</th>
                             <th>Year</th>
                             <th>Availability</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>  
-    <?php                
+<?php                
                         foreach($books as $row){
-    ?>
+?>
                         <tr>
                             <td><?= $row['accesion'] ?></td>
                             <td><?= $row['title'] ?></td>
                             <td><?= $row['publisher'] ?></td>
                             <td><?= $row['year'] ?></td>
                             <td>
-    <?php                       
+<?php                       
                                 if($row['availability'] > 0)
                                     echo "<p class='green'>Available</p>";
                                 else
                                     echo "<p class='red'>Borrowed</p>";
-    ?>
+?>
                             </td>
                             <td>
-    <?php                       if($row['availability'] > 0) 
+<?php                           if($row['availability'] > 0 && $total_borrowed['school_id'] < 3)  
                                     echo "<a class=\"borrow\" href=\"students/process_borrow_book/".$row['id']."\" >Issue</a>";
-                                else
-                                    echo "<p></p>";
-                                    
+                                else if($row['availability'] > 0 && $count['count_id'] == 0)  
+                                    echo "<a class=\"borrow\" href=\"students/process_borrow_book/".$row['id']."\" >Issue</a>";
+                                else if($row['availability'] > 0) 
+                                    echo "<a class=\"borrow\" href=\"students/more_than_5\">Issue</a>";                        
                                 
-    ?>                       </td>
+?>                          </td>
                         </tr>
-    <?php               }   ?>
+<?php                   }   ?>
                     </tbody>
                 </table>    
             </div>

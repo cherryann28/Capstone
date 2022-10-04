@@ -60,6 +60,7 @@ $route['student_list'] = 'admins/student_list';
 $route['issue_request'] = 'admins/issue_request';
 $route['return_request'] = 'admins/return_request';
 $route['renew_request'] = 'admins/renew_request';
+$route['currently_issued_books'] = 'admins/currently_issued_books';
 
 // $route['student_page'] = 'students/student_page';
 $route['borrowed_books'] = 'students/borrowed_books';

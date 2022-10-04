@@ -12,8 +12,17 @@ class Students extends CI_Controller {
     public function index()
     {
 		$data['books'] = $this->Student->get_all_books();
+		// $data['use'] = $this->Student->get_all_users_by_faculty();
+		$data['count'] = $this->Student->count_book_by_1();
+		$data['total_borrowed'] = $this->Student->count_borrow_books();
         $this->load->view('students/books', $data);
     }
+
+	public function more_than_5()
+	{
+		$this->session->set_flashdata('sent', 'This request not sent to admin!');
+		redirect('students/request_sent');
+	}
 
 	public function search()
 	{	
@@ -27,6 +36,7 @@ class Students extends CI_Controller {
 		else
 		{
 			$data['books'] = $this->Student->search_book($book);
+			$data['total_borrowed'] = $this->Student->count_borrow_books();
 			$this->load->view('students/books', $data);		
 		}
 	}
@@ -42,11 +52,13 @@ class Students extends CI_Controller {
 		$this->load->view('students/messages', $data);
 	}
 
-	// public function process_message()
-	// {
-	// 	$data['messages'] = $this->Student->message();
-	// 	$this->load->view('students/messages', $data);
-	// }
+	public function process_borrow_book($book_id)
+	{
+		$this->Student->borrow_book($book_id);
+		$this->session->set_flashdata('sent', 'This request sent to admin!');
+		redirect('students/request_sent');
+		
+	}
 
 	public function borrowed_books()
 	{	
@@ -60,13 +72,6 @@ class Students extends CI_Controller {
 		$this->load->view('students/previously_borrowed', $data);
 	}
 	
-	public function process_borrow_book($book_id)
-	{
-		$this->Student->borrow_book($book_id);
-		$this->session->set_flashdata('sent', 'This request sent to admin!');
-		redirect('students/request_sent');
-	}
-
 	public function request_sent()
 	{
 		$data['books'] = $this->Student->get_all_books();
@@ -98,11 +103,6 @@ class Students extends CI_Controller {
 		$data['borrows'] = $this->Student->currently_borrowed_books();
 		$this->load->view('students/sent_renew_book', $data);
 	}
-
-	
-	
-	
-	
 
 }
 

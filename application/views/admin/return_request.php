@@ -14,7 +14,7 @@
 <body>
     <div class="request_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
             <div class="dropdown">
                 <button class="dropbtn">Return Requests</button>
                 <div class="dropdown-content">
@@ -25,6 +25,7 @@
                     <a href="<?= base_url('return_request');?>">Return Request</a>
                     <a href="<?= base_url('renew_request');?>">Renew Request</a>
                     <a href="<?= base_url('student_list');?>">Students List</a>
+                    <a href="<?= base_url('currently_issued_books');?>">Currently Issued Books</a>
                 </div>
             </div>
         </div>
@@ -38,7 +39,7 @@
                        <th>Accesion</th>
                        <th>Book Name</th>
                        <th>Dues</th>
-                       <th></th>
+                       <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,19 +50,17 @@
                         <td><?= $return['school_id'] ?></td>
                         <td><?= $return['accesion'] ?></td>
                         <td><?= $return['title'] ?></td>
-                        <td><?php 
-                                      if($return['x'] > 0)
-                                          echo $dues;
-                                          else
-                                          echo 0; ?></td>
                         <td>
-                            <a id="accept" href="<?= base_url('admins/process_return')?>/<?= $return['book_id'] ?>/<?= $return['id'] ?>/<?= $return['book_id'] ?>">Accept</a>  
+<?php                       if($return['x'] > 0)
+                                echo $return['x'];
+                            else
+                                echo 0; ?>
+                        </td>
+                        <td>
+                            <a id="accept" href="<?= base_url('admins/process_return')?>/<?= $return['record_id'] ?>/<?= $return['book_id'] ?>/<?= $return['return_id'] ?>/<?= $return['school_id'] ?>">Accept</a>      
                         </td>
                     </tr>
-<?php               }
-?>
-             
-                    
+<?php               }   ?>
                 </tbody>
             </table>    
 		</div>

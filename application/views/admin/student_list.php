@@ -8,15 +8,15 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?=base_url('assets/css/admin/student_listss.css')?>">
+    <link rel="stylesheet" href="<?=base_url('assets/css/admin/student_lists.css')?>">
     <title>Student List</title>
 </head>
 <body>
     <div class="student_list_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
-            <form action="">
-                <input type="text" placeholder="Search Student ID">
+            <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <form  action="<?= base_url()?>admins/process_search_student" method="post">
+                <input type="text" placeholder="Search Student ID" name="search">
             </form>
             <div class="dropdown">
                 <button class="dropbtn">Students List</button>
@@ -28,6 +28,7 @@
                     <a href="<?= base_url('return_request');?>">Return Request</a>
                     <a href="<?= base_url('renew_request');?>">Renew Request</a>
                     <a href="<?= base_url('student_list');?>">Students List</a>
+                    <a href="<?= base_url('currently_issued_books');?>">Currently Issued Books</a>
                 </div>
             </div>
         </div>
@@ -39,6 +40,8 @@
                        <th>Name</th>
                        <th>Student ID</th>
                        <th>Email Address</th>
+                       <th>Category</th>
+                       <th>Mobile No.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,6 +52,8 @@
                             <td><?= ucfirst($student['name'])?></td>
                             <td><?= ucfirst($student['school_id'])?></td>
                             <td><?= $student['email']?></td>
+                            <td><?= $student['user_level']?></td>
+                            <td><?= $student['contact_number']?></td>
                         </tr>
 <?php } ?>
                 </tbody>

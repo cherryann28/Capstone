@@ -8,13 +8,13 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?=base_url('assets/css/admin/accept_renewal.css')?>">
+    <link rel="stylesheet" href="<?=base_url('assets/css/admin/accept_renewals.css')?>">
     <title>Accept Renewals</title>
 </head>
 <body>
     <div class="renew_request_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
             <div class="dropdown">
                 <button class="dropbtn">Renew Requests</button>
                 <div class="dropdown-content">
@@ -25,6 +25,7 @@
                     <a href="<?= base_url('return_request');?>">Return Request</a>
                     <a href="<?= base_url('renew_request');?>">Renew Request</a>
                     <a href="<?= base_url('student_list');?>">Students List</a>
+                    <a href="<?= base_url('currently_issued_books');?>">Currently Issued Books</a>
                 </div>
             </div>
         </div>
@@ -55,10 +56,10 @@
                         <td><?= $renew['title'] ?></td>
                         <td><?= $renew['renewals_left'] ?></td>
                         <td>
-                            <?php
-                                if($renew['renewals_left'] > 0)
-                            ?>
-                            <a id="accept" href="<?= base_url('admins/process_renewal')?>/<?= $renew['id'] ?>/<?= $renew['id'] ?>/<?= $renew['school_id']?>">Accept</a>
+<?php
+                            if($renew['renewals_left'] > 0)
+?>
+                                <a id="accept" href="<?= base_url('admins/process_renewal')?>/<?= $renew['renew_id'] ?>/<?= $renew['renew_id'] ?>/<?= $renew['school_id']?>">Accept</a>
                         </td>
                     </tr>
 <?php               }

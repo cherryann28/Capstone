@@ -14,7 +14,7 @@
 <body>
     <div class="messages_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> |<a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <h3>Welcome, <?= $this->session->userdata('name');?> |<a href="<?= base_url('users/logout');?>"> Logout</a></h3>
             <form action="">
                 <input type="text" placeholder="Search Book's title">
             </form>
@@ -33,7 +33,7 @@
                 <thead>
                     <tr>
                         <th>Messages</th>
-                        <th>Date time</th>
+                        <th>Date and time</th>
                         <!-- <th>Time</th> -->
                     </tr>
                 </thead>

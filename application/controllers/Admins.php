@@ -30,14 +30,36 @@ class Admins extends CI_Controller {
 		$this->load->view('admin/add_books');
 	}
 
-	public function search()
+	public function process_search_student()
+	{	
+		$student = $this->input->post('search');
+		if(empty($this->Admin->search_student($student)))
+		{
+			$errors[] = "No Result!";
+			$this->session->set_flashdata('errors', $errors);
+			redirect('admins/no_student_result');
+		}
+		else
+		{
+			$data['students'] = $this->Admin->search_student($student);
+			$this->load->view('admin/student_list', $data);		
+		}
+		
+	}
+
+	public function no_student_result()
+	{
+		$this->load->view('admin/no_student_result');
+	}
+
+	public function process_search_book()
 	{	
 		$book = $this->input->post('search');
 		if(empty($this->Admin->search_book($book)))
 		{
 			$errors[] = "No Result!";
 			$this->session->set_flashdata('errors', $errors);
-			redirect('admins/no_result');
+			redirect('admins/no_search_result');
 		}
 		else
 		{
@@ -46,11 +68,10 @@ class Admins extends CI_Controller {
 		}
 	}
 
-	public function no_result()
+	public function no_search_result()
 	{
-		$this->load->view('admin/no_result');
+		$this->load->view('admin/no_search_result');
 	}
-
 
 	public function process_add_book()
 	{
@@ -74,7 +95,6 @@ class Admins extends CI_Controller {
 	public function issue_request()
 	{
 		$data['records'] = $this->Admin->get_all_records();
-		// $data['returns'] = $this->Admin->get_all_return();
 		$this->load->view('admin/issue_request', $data);
 	}
 
@@ -103,10 +123,36 @@ class Admins extends CI_Controller {
 		}
 	}
 
+	public function process_add_message()
+	{
+		$message = $this->Admin->validate_message($this->input->post());
+		
+		if($message != null)
+		{
+			$errors = array(validation_errors());	
+			$this->session->set_flashdata("errors", $errors);
+			redirect('admins/messenger');
+		}
+		else
+		{
+			$this->Admin->add_message($this->input->post());
+			$success[] = "Message Sent!";
+			$this->session->set_flashdata('success', $success);
+			redirect('admins/messenger');
+		}
+	}
+
+
 	public function student_list()
 	{
 		$data['students'] = $this->Admin->get_all_users_by_user_level();
 		$this->load->view('admin/student_list', $data);
+	}
+
+	public function currently_issued_books()
+	{
+		$data['currently_issued_books'] = $this->Admin->get_all_currently_issued_books();
+		$this->load->view('admin/currently_issued_books', $data);
 	}
 
 	/*
@@ -144,9 +190,18 @@ class Admins extends CI_Controller {
 		}
 	}
 
-	public function process_accept($record_id, $book_id, $student_id)
+	public function process_accept_student($record_id, $book_id, $student_id)
 	{
-		$this->Admin->accept_book($record_id);
+		$this->Admin->accept_book_student($record_id);
+		$this->Admin->availability($book_id);
+		$this->Admin->messenger($student_id);
+		redirect('admins/accept_request');
+		
+	}
+
+	public function process_accept_faculty($record_id, $book_id, $student_id)
+	{
+		$this->Admin->accept_book_faculty($record_id);
 		$this->Admin->availability($book_id);
 		$this->Admin->messenger($student_id);
 		redirect('admins/accept_request');
@@ -171,9 +226,9 @@ class Admins extends CI_Controller {
 		$this->load->view('admin/accept_renewal', $data);
 	}
 
-	public function process_renewal($book_id, $delete_renew, $message_id)
+	public function process_faculty_renewal($book_id, $delete_renew, $message_id)
 	{
-		$this->Admin->accept_renew_book($book_id);
+		$this->Admin->accept_renew_faculty_book($book_id);
 		$this->session->set_flashdata('renew', 'Renew Success');
 		$this->Admin->delete_renew_book($delete_renew);
 		$this->Admin->renew_message($message_id);
@@ -181,12 +236,23 @@ class Admins extends CI_Controller {
 		redirect('admins/accept_renewal');	
 	}
 
-	public function process_return($book_id, $delete_return, $add_return)
+	public function process_student_renewal($book_id, $delete_renew, $message_id)
+	{
+		$this->Admin->accept_renew_student_book($book_id);
+		$this->session->set_flashdata('renew', 'Renew Success');
+		$this->Admin->delete_renew_book($delete_renew);
+		$this->Admin->renew_message($message_id);
+		
+		redirect('admins/accept_renewal');	
+	}
+
+	public function process_return($book_id, $add_return, $delete_return, $message_id)
 	{
 		$this->Admin->accept_return_book($book_id);
 		$this->session->set_flashdata('sent', 'Return Success');
-		$this->Admin->delete_return_book($delete_return);
 		$this->Admin->return_availability($add_return);
+		$this->Admin->delete_return_book($delete_return);
+		$this->Admin->return_message($message_id);
 		
 		redirect('admins/accept_return');	
 		
@@ -211,10 +277,11 @@ class Admins extends CI_Controller {
 	}
 	
 
-	public function decline_records($record_id)
+	public function process_decline($record_id, $message_id)
 	{
-		$this->Admin->delete_records($record_id);
+		$this->Admin->decline_borrow_book($record_id);
 		$this->session->set_flashdata('success', 'Delete Success');
+		$this->Admin->decline_message($message_id);
 		redirect('admins/decline');
 	}
 	

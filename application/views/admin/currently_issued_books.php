@@ -8,17 +8,20 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?=base_url('assets/css/admin/message.css')?>">
-    <title>Admin Messenger</title>
+    <link rel="stylesheet" href="<?=base_url('assets/css/admin/current.css')?>">
+    <title>Admin Currently Issued Books</title>
 </head>
 <body>
-    <div class="messenger_container">
+    <div class="currently_issued_books_container">
         <div class="search">
             <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <form action="" method="post">
+                <input type="text" placeholder="Enter Student ID/Book Name/Accesion" name="search">
+            </form>
             <div class="dropdown">
-                <button class="dropbtn">Messenger</button>
+                <button class="dropbtn">Currently Issued Books</button>
                 <div class="dropdown-content">
-                    <a href="<?= base_url('messenger');?>">Messenger</a>
+                    <a href="<?= base_url('messenger');?>">Messsenger</a>
                     <a href="<?= base_url('add_book');?>">Add Books</a>
                     <a href="<?= base_url('book_list');?>">Book List</a>
                     <a href="<?= base_url('issue_request');?>">Issue Requests</a>
@@ -29,8 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="send_message">
-            <h3>Send Message</h3>
+        <div class="data">
             <div id="success">
 <?php
         if($this->session->flashdata('success'))
@@ -40,27 +42,39 @@
                 <p><?= $value ?></p>
 <?php       }
         } ?>
-        </div>
-        <div id="errors">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Accesion</th>
+                        <th>Book Name</th>
+                        <th>Issue Date</th>
+                        <th>Due Date</th>
+                        <th>Dues</th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
-        if($this->session->flashdata('errors'))
-        {
-            foreach($this->session->flashdata('errors') as $value)
-            { ?>
-                <p><?= $value ?></p>
-<?php   }
-        } ?>
-</div>
-            <form action="<?= base_url('admins/process_add_message')?>" method="post">
-                <div class="student_id">
-                    <p>Student ID</p>
-                    <input type="text" name="school_id">
-                </div>
-                <p>Message</p>
-                <textarea name="content" id="" cols="30" rows="10"></textarea>
-                <input type="submit" value="Send">
-            </form>
-        </div>        
+                foreach($currently_issued_books as $row){
+?>
+                    <tr>
+                        <td><?= $row['school_id'] ?></td>
+                        <td><?= $row['accesion'] ?></td>
+                        <td><?= $row['title'] ?></td>
+                        <td><?= $row['date_of_issue'] ?></td>
+                        <td><?= $row['due_date'] ?></td>
+                        <td>
+<?php                       if( $row['dues'] > 0)
+                                echo "<font color='red'>".$row['dues']."</font>";
+                            else
+                                echo "<font color='green'>0</font>";
+?>           
+                    </tr>
+<?php           }   ?>
+                </tbody>
+            </table>    
+		</div>
     </div>
 </body>
 </html>

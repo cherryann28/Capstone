@@ -16,8 +16,8 @@
     <div id="books">
         <div class="search_book_container">
             <div class="search">
-                <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>">Logout</a></h3>
-                <form class="form" action="<?= base_url()?>admins/search" method="post">
+                <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>">Logout</a></h3>
+                <form class="form" action="<?= base_url()?>admins/process_search_book" method="post">
                     <input type="text" placeholder="Search Book's title" name="search">
                 </form>
                 <div class="dropdown">
@@ -30,25 +30,13 @@
                         <a href="<?= base_url('return_request');?>">Return Request</a>
                         <a href="<?= base_url('renew_request');?>">Renew Request</a>
                         <a href="<?= base_url('student_list');?>">Students List</a>
+                        <a href="<?= base_url('currently_issued_books');?>">Currently Issued Books</a>
                     </div>
                 </div>
             </div>
             <div class="view_all">
                 <a href="<?= base_url('admins') ?>">View all books</a>
             </div>
-            <!-- <div class="data">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Accesion</th>
-                            <th>Title</th>
-                            <th>Publisher</th>
-                            <th>Year</th>
-                            <th>Availability</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table>    -->
                 <div class="errors">
 <?php
         if($this->session->flashdata('errors'))
@@ -58,7 +46,7 @@
                 <h1><?= $value ?></h1>
 <?php       }
         } ?>
-                    </div> 
+                </div> 
             </div>
         </div>
     </div>

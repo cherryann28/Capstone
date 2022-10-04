@@ -66,6 +66,11 @@ input[type=text], input[type=password]{
     /* padding: 10px; */
 }
 
+select{
+    height: 30px;
+    width: 100%;
+}
+
 .about{
     width: 400px;
     position: relative;

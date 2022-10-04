@@ -31,7 +31,7 @@
     <div id="books">
         <div class="request_sent_container">
             <div class="search">
-                <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+                <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
                 <form class="form" action="<?= base_url()?>students/search" method="post">
                     <input type="text" placeholder="Search Book's title" name="search">
                 </form>
@@ -66,32 +66,30 @@
                         </tr>
                     </thead>
                     <tbody>  
-    <?php                
+<?php                
                         foreach($books as $row){
-    ?>
+?>
                         <tr>
                             <td><?= $row['accesion'] ?></td>
                             <td><?= $row['title'] ?></td>
                             <td><?= $row['publisher'] ?></td>
                             <td><?= $row['year'] ?></td>
                             <td>
-    <?php                       
+<?php                       
                                 if($row['availability'] > 0)
                                     echo "<p class='green'>Available</p>";
                                 else
                                     echo "<p class='red'>Borrowed</p>";
-    ?>
+?>
                             </td>
                             <td>
-    <?php                       if($row['availability'] > 0) 
+<?php                       if($row['availability'] > 0) 
                                     echo "<a class=\"borrow\" href=\"students/process_borrow_book/".$row['id']."\">Issue</a>";
                                 else
-                                    echo "<p></p>";
-                                    
-                                
-    ?>                       </td>
+                                    echo "<p></p>";                                
+?>                          </td>
                         </tr>
-    <?php               }   ?>
+<?php               }   ?>
                     </tbody>
                 </table>    
             </div>

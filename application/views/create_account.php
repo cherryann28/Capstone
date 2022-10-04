@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?=base_url('assets/css/create_account.css')?>">
+    <link rel="stylesheet" href="<?=base_url('assets/css/create_accoun.css')?>">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <title>Create Account</title>
     <style>
@@ -29,10 +29,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             position: absolute;
             right: 200px;
             font-size: 14px;
-            /* background-color: #4444; */
+            background-color: #ffff;
             font-weight: bold;
-            border-radius: 10px;
-            margin-top: 10px;
+            /* border-radius: 10px; */
+            margin-top: 30px;
             z-index: 1;
         }
     </style>
@@ -72,14 +72,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="input-div">
                         <div>
-                            <h5>Firstname</h5>
-                            <input class="input" type="text" name="first_name">
-                        </div>
-                    </div>
-                    <div class="input-div">
-                        <div>
-                            <h5>Surname</h5>
-                            <input class="input" type="text" name="last_name">
+                            <h5>Name</h5>
+                            <input class="input" type="text" name="name">
                         </div>
                     </div>
                     <div class="input-div">
@@ -88,6 +82,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <input class="input" type="text" name="contact_number">
                         </div>
                     </div>
+                    <div class="input-div">
+                        <div>
+                            <h5>Are you a student or faculty?</h5>
+                            <select name="user_level">
+                                <option value="">Select</option>
+                                <option value="student">Student</option>
+                                <option value="faculty">Faculty</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
                     <div class="input-div">
                         <div>
                             <h5>School E-mail</h5>

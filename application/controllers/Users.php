@@ -36,7 +36,7 @@ class Users extends CI_Controller {
 
 	/*
 		* DOCU: This function is to validate and process the create account form, 
-				if it is valid then it will save the data in the database users 
+				if it is valid then it will save the data into database users 
 				table else it will prompt an error message.
 		* Owned by Cherry Ann
 	*/
@@ -91,7 +91,7 @@ class Users extends CI_Controller {
 						array(
 							'user_id'=> $user['id'], 
 							'user_level'=> $user['user_level'],
-							'first_name'=> $user['first_name'],
+							'name'=> $user['name'],
 							));
 					redirect('admins');
 				}
@@ -102,7 +102,7 @@ class Users extends CI_Controller {
 							'user_id'=> $user['id'],
 							'school_id'=> $user['school_id'], 
 							'user_level'=> $user['user_level'],
-							'first_name'=> $user['first_name'],
+							'name'=> $user['name'],
 							));
 					redirect('students');
 					}	

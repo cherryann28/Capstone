@@ -28,19 +28,19 @@ class User extends CI_Model
     {
         if($this->get_all_user() == null)
         {
-            $query = "INSERT INTO users (school_id, first_name, last_name, contact_number, email, password, user_level, created_at)
-                         VALUES (?,?,?,?,?,?,?,NOW())";
+            $query = "INSERT INTO users (school_id, name, contact_number, email, password, user_level, created_at)
+                         VALUES (?,?,?,?,?,?,NOW())";
             $values = array($user['school_id'], 
-                            $user['first_name'], $user['last_name'], $user['contact_number'], $user['email'], 
+                            $user['name'], $user['contact_number'], $user['email'], 
                             md5($user['password']),'user_level' => 'admin');
         }
         else
         {
-            $query = "INSERT INTO users (school_id, first_name, last_name, contact_number, email, password, user_level, created_at)
-                         VALUES (?,?,?,?,?,?,?,NOW())";
+            $query = "INSERT INTO users (school_id, name, contact_number, email, password, user_level, created_at)
+                         VALUES (?,?,?,?,?,?,NOW())";
             $values = array($user['school_id'], 
-                        $user['first_name'], $user['last_name'], $user['contact_number'], $user['email'], 
-                        md5($user['password']),'user_level' => 'student');
+                        $user['name'], $user['contact_number'], $user['email'], 
+                        md5($user['password']), $user['user_level']);
         }
         
         return $this->db->query($query,$values);
@@ -54,9 +54,9 @@ class User extends CI_Model
     {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('school_id', 'School ID', 'required');
-        $this->form_validation->set_rules('first_name', 'First Name', 'required');
-        $this->form_validation->set_rules("last_name", "Last Name", "trim|required|min_length[2]|alpha"); 
+        $this->form_validation->set_rules("name", "Name", "trim|required|min_length[2]"); 
         $this->form_validation->set_rules("contact_number", "Contact number", "trim|required|exact_length[11]|numeric|is_unique[users.contact_number]|regex_match['^09.{9}$']");        
+        $this->form_validation->set_rules("user_level", "Select option", "required");
         $this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[users.email]');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
 

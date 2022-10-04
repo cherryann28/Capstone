@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <html lang="en">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +14,7 @@
     <body>
         <div class="request_container">
             <div class="search">
-                <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+                <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
                 <div class="dropdown">
                     <button class="dropbtn">Issue Requests</button>
                     <div class="dropdown-content">
@@ -25,6 +25,7 @@
                         <a href="<?= base_url('return_request');?>">Return Request</a>
                         <a href="<?= base_url('renew_request');?>">Renew Request</a>
                         <a href="<?= base_url('student_list');?>">Students List</a>
+                        <a href="<?= base_url('currently_issued_books');?>">Currently Issued Books</a>
                     </div>
                 </div>
             </div>
@@ -37,29 +38,37 @@
                         <th>Accesion</th>
                         <th>Book</th>
                         <th>Availability</th>
-                        <th></th>
+                        <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php
+<?php
                         foreach($records as $record) {
-    ?>
+?>
                         <tr>
                             <td><?= $record['school_id'] ?></td>
                             <td><?= $record['accesion'] ?></td>
                             <td><?= $record['title'] ?></td>
                             <td><?= $record['availability'] ?></td>
                             <td>
-                                <a id="accept" href="<?= base_url('admins/process_accept')?>/<?= $record['id']?>/<?= $record['book_id']?>/<?= $record['school_id']?>">Accept</a>  
-                                <a id="decline" href="<?= base_url('admins/decline_records')?>/<?= $record['id'] ?>">Decline</a>
+<?php 
+                                if($record['user_level'] == 'faculty'){
+?>
+                                    <a id="accept" href="<?= base_url('admins/process_accept_faculty')?>/<?= $record['id']?>/<?= $record['book_id']?>/<?= $record['school_id']?>">Accept</a>  
+<?php                           }
+                                else if ($record['user_level'] == 'student') {
+?>
+                                    <a id="accept" href="<?= base_url('admins/process_accept_student')?>/<?= $record['id']?>/<?= $record['book_id']?>/<?= $record['school_id']?>">Accept</a>  
+<?php                           }   ?>
+                                    <a id="decline" href="<?= base_url('admins/process_decline')?>/<?= $record['id'] ?>/<?= $record['school_id'] ?>">Decline</a>
                             </td>
                         </tr>
-    <?php               }
-    ?>
+<?php               }       ?>
+
                     </tbody>
                 </table>    
             </div>
 
         </div>
     </body>
-    </html>
+</html>

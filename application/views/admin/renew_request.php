@@ -14,7 +14,7 @@
 <body>
     <div class="renew_request_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
             <div class="dropdown">
                 <button class="dropbtn">Renew Requests</button>
                 <div class="dropdown-content">
@@ -25,6 +25,7 @@
                     <a href="<?= base_url('return_request');?>">Return Request</a>
                     <a href="<?= base_url('renew_request');?>">Renew Request</a>
                     <a href="<?= base_url('student_list');?>">Students List</a>
+                    <a href="<?= base_url('currently_issued_books');?>">Currently Issued Books</a>
                 </div>
             </div>
         </div>
@@ -38,7 +39,7 @@
                        <th>Accesion</th>
                        <th>Book Name</th>
                        <th>Renewals Left</th>
-                       <th></th>
+                       <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,16 +52,18 @@
                         <td><?= $renew['title'] ?></td>
                         <td><?= $renew['renewals_left'] ?></td>
                         <td>
-                            <?php
-                                if($renew['renewals_left'] > 0)
-                            ?>
-                            <a id="accept" href="<?= base_url('admins/process_renewal')?>/<?= $renew['id'] ?>/<?= $renew['id'] ?>/<?= $renew['school_id']?>">Accept</a>
+<?php 
+                            if($renew['user_level'] == 'faculty' && $renew['renewals_left'] > 0){
+?>
+                                <a id="accept" href="<?= base_url('admins/process_faculty_renewal')?>/<?= $renew['record_id'] ?>/<?= $renew['renew_id'] ?>/<?= $renew['school_id']?>">Accept</a>
+<?php                       }
+                            else if($renew['user_level'] == 'student' && $renew['renewals_left'] > 0) {
+?>
+                                <a id="accept" href="<?= base_url('admins/process_student_renewal')?>/<?= $renew['record_id'] ?>/<?= $renew['renew_id'] ?>/<?= $renew['school_id']?>">Accept</a>
+<?php                       } ?>                           
                         </td>
                     </tr>
-<?php               }
-?>
-             
-                    
+<?php               }   ?>
                 </tbody>
             </table>    
 		</div>

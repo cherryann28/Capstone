@@ -14,7 +14,7 @@
 <body>
     <div class="request_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
             <div class="dropdown">
                 <button class="dropbtn">Issue Requests</button>
                 <div class="dropdown-content">
@@ -25,13 +25,14 @@
                     <a href="<?= base_url('return_request');?>">Return Request</a>
                     <a href="<?= base_url('renew_request');?>">Renew Request</a>
                     <a href="<?= base_url('student_list');?>">Students List</a>
+                    <a href="<?= base_url('currently_issued_books');?>">Currently Issued Books</a>
                 </div>
             </div>
         </div>
         <div id="accept_request">
-                <img src="<?=base_url('assets/img/sent.png')?>" alt="request-sent-image">    
-                <p><?= $this->session->flashdata('accept')?></p>
-                <a href="<?= base_url('issue_request')?>">Okay</a>
+            <img src="<?=base_url('assets/img/sent.png')?>" alt="request-sent-image">    
+            <p><?= $this->session->flashdata('accept')?></p>
+            <a href="<?= base_url('issue_request')?>">Okay</a>
         </div>
         <div class="data">
             <h2>Issue Requests</h2>
@@ -41,8 +42,8 @@
                        <th>Student ID</th>
                        <th>Accesion</th>
                        <th>Book</th>
+                       <th>Availability</th>
                        <th>Action</th>
-                       <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,17 +51,16 @@
                     foreach($records as $record) {
 ?>
                     <tr>
-                        <td><?= $record['student_id'] ?></td>
+                        <td><?= $record['school_id'] ?></td>
                         <td><?= $record['accesion'] ?></td>
                         <td><?= $record['title'] ?></td>
                         <td><?= $record['availability'] ?></td>
                         <td>
-                        <a id="accept" href="<?= base_url('admins/process_accept')?>/<?= $record['id']?>/<?= $record['book_id']?>/<?= $record['school_id']?>">Accept</a>   
+                            <a id="accept" href="<?= base_url('admins/process_accept')?>/<?= $record['id']?>/<?= $record['book_id']?>/<?= $record['school_id']?>">Accept</a>  
                             <a id="decline" href="<?= base_url('admins/decline_records')?>/<?= $record['id'] ?>">Decline</a>
-                        </td>
                     </tr>
-<?php               }
-?>
+<?php               }   ?>
+
                 </tbody>
             </table>    
 		</div>

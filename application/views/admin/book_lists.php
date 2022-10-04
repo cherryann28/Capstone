@@ -9,13 +9,20 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?=base_url('assets/css/admin/book_lists.css')?>">
-    <title>Admin Page</title>
+    <title>Admin Book Lists</title>
+    <style>
+        #success{
+            background-color:  #568b57;
+            width: 100%;
+            color: #ffff;
+        }
+    </style>
 </head>
 <body>
     <div class="book_details_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
-            <form action="<?= base_url()?>admins/search" method="post">
+            <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <form action="<?= base_url()?>admins/process_search_book" method="post">
                 <input type="text" placeholder="Search Book's title" name="search">
             </form>
             <div class="dropdown">
@@ -28,6 +35,7 @@
                     <a href="<?= base_url('return_request');?>">Return Request</a>
                     <a href="<?= base_url('renew_request');?>">Renew Request</a>
                     <a href="<?= base_url('student_list');?>">Students List</a>
+                    <a href="<?= base_url('currently_issued_books');?>">Currently Issued Books</a>
                 </div>
             </div>
         </div>

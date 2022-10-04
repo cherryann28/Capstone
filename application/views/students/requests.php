@@ -14,7 +14,7 @@
 <body>
     <div class="request_container">
         <div class="search">
-            <h3>Welcome, <?= $this->session->userdata('first_name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
+            <h3>Welcome, <?= $this->session->userdata('name');?> | <a href="<?= base_url('users/logout');?>"> Logout</a></h3>
             <form action="">
                 <input type="text" placeholder="Search Book's title">
             </form>

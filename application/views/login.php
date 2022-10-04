@@ -12,13 +12,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="assets/css/font-awesome/css/all.css"> -->
-    <link rel="stylesheet" href="assets/css/login.css">
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link rel="stylesheet" href="assets/css/logins.css">
+    <!-- <script src="https://kit.fontawesome.com/a81368914c.js"></script> -->
+    <script src="https://kit.fontawesome.com/fb998ac4aa.js" crossorigin="anonymous"></script>
     <title>Login</title>
     <style>
         #invalid{
             position: absolute;
-            right: 80px;
+            right: 110px;
             top: 25px;
             color: red;
         }
@@ -27,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             position: absolute;
             top: 10px;
         }
+        
     </style>
 </head>
 <body>
@@ -71,15 +73,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="total">
             <div class="books">
                 <h3><?= $books_total['availability'] ?></h3>               
-                <p>Books</p>
+                <p><i class="fas fa-book-open"></i> Books</p>
             </div>
             <div class="borrowed">
                 <h3><?= $borrowed['id'] ?></h3>
-                <p>Borrowed</p>
+                <p><i class="fa-solid fa-arrow-up"></i> Borrowed</p>
             </div>
             <div class="returned">
                 <h3><h3><?= $returned['id'] ?></h3></h3>
-                <p>Returned</p>
+                <p><i class="fa-solid fa-arrow-down"></i> Returned</p>
             </div>
         </div>
     </div>
